@@ -6,11 +6,25 @@ metadata:
     {{- include "bind9-helm.labels" . | nindent 4 }}
 data:
   named.conf: |
+    acl "trusted" {
+    {{- range .Values.trusted }}
+        {{ . }};
+    {{- end }}
+    };
+
     options {
       directory "/var/cache/bind";
 
+      auth-nxdomain no;
+      dnssec-validation auto;
+      empty-zones-enable no;
+      querylog yes;
+      version "not available";
       recursion yes;
+
       allow-query { any; };
+      allow-recursion { trusted; };
+      allow-query-cache { trusted; };
 
       forwarders {
     {{- range .Values.forwarders }}
@@ -18,13 +32,6 @@ data:
     {{- end }}
       };
       forward only;
-      
-      dnssec-enable yes;
-      dnssec-validation yes;
-
-      auth-nxdomain no;    # conform to RFC1035
-      listen-on-v6 { any; };
-
     };
 
     {{- if .Values.zones }}
