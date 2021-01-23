@@ -29,7 +29,7 @@ data:
 
     {{- if .Values.zones }}
     {{- range .Values.zones }}
-    zone "{{ .name }}." {
+    zone "{{ .name }}" {
       type forward;
       forward only;
       forwarders {
