@@ -27,7 +27,8 @@ data:
       };
       forward only;
 
-      dnssec-validation auto;
+      dnssec-enable yes;
+      dnssec-validation yes;
 
       auth-nxdomain no;
       listen-on-v6 { any; };
