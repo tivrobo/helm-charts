@@ -42,7 +42,7 @@ spec:
               port: dns-tcp
           volumeMounts:
             - name: "{{ template "bind9-helm.fullname" . }}-config"
-              mountPath: "/etc/named.conf"
+              mountPath: "/etc/bind"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:

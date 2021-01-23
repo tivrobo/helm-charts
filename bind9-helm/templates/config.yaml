@@ -15,7 +15,7 @@ data:
           forwarders {
     {{- range .Values.forwarders }}
             {{ . }};
-    {{- end -}}
+    {{- end }}
           };
           forward only;
           
