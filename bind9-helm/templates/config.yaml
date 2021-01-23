@@ -7,21 +7,35 @@ metadata:
 data:
   named.conf: |
     options {
-          directory "/var/cache/bind";
+      directory "/var/cache/bind";
 
-          recursion yes;
-          allow-query { any; };
+      recursion yes;
+      allow-query { any; };
 
-          forwarders {
+      forwarders {
     {{- range .Values.forwarders }}
-            {{ . }};
+        {{ . }};
     {{- end }}
-          };
-          forward only;
-          
-          dnssec-enable yes;
-          dnssec-validation yes;
+      };
+      forward only;
+      
+      dnssec-enable yes;
+      dnssec-validation yes;
 
-          auth-nxdomain no;    # conform to RFC1035
-          listen-on-v6 { any; };
+      auth-nxdomain no;    # conform to RFC1035
+      listen-on-v6 { any; };
+
     };
+    {{- if .Values.zones }}
+    {{- range .Values.zones }}
+    zone "{{ .name }}." {
+      type forward;
+      forward only;
+      forwarders {
+    {{- range .forwarders }}
+        {{ . }};
+    {{- end }}
+      };
+    {{- end }}
+    };
+    {{- end }}

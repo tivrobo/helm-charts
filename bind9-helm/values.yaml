@@ -70,3 +70,9 @@ affinity: {}
 forwarders:
   - 8.8.8.8
   - 8.8.4.4
+
+zones:
+  - name: example.com
+    forwarders:
+      - 8.8.8.8
+      - 8.8.4.4

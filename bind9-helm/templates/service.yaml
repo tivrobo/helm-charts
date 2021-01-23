@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "bind9-helm.labels" . | nindent 4 }}
 spec:
+  selector:
+    {{- include "bind9-helm.selectorLabels" . | nindent 4 }}
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 53
       protocol: UDP
       name: dns
-  selector:
-    {{- include "bind9-helm.selectorLabels" . | nindent 4 }}
