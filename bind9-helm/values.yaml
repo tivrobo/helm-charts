@@ -66,3 +66,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+forwarders:
+  - 10.10.90.2
+  - 10.10.90.3

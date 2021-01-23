@@ -40,8 +40,15 @@ spec:
           readinessProbe:
             tcpSocket:
               port: dns-tcp
+          volumeMounts:
+            - name: "{{ template "bind9-helm.fullname" . }}-config"
+              mountPath: "/etc/named.conf"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: "{{ template "bind9-helm.fullname" . }}-config"
+          configMap:
+            name: "{{ template "bind9-helm.fullname" . }}-config"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "bind9-helm.fullname" . }}-config
+  labels:
+    {{- include "bind9-helm.labels" . | nindent 4 }}
+data:
+  named.conf: |
+    options {
+          directory "/var/cache/bind";
+
+          recursion yes;
+          allow-query { any; };
+
+          forwarders {
+    {{- range .Values.forwarders }}
+            {{ . }};
+    {{- end -}}
+          };
+          forward only;
+          
+          dnssec-enable yes;
+          dnssec-validation yes;
+
+          auth-nxdomain no;    # conform to RFC1035
+          listen-on-v6 { any; };
+    };
