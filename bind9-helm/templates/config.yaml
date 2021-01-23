@@ -26,6 +26,7 @@ data:
       listen-on-v6 { any; };
 
     };
+
     {{- if .Values.zones }}
     {{- range .Values.zones }}
     zone "{{ .name }}." {
@@ -36,6 +37,6 @@ data:
         {{ . }};
     {{- end }}
       };
-    {{- end }}
     };
+    {{- end }}
     {{- end }}
